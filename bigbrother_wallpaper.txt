@@ -1,0 +1,15 @@
+REM === WALLPAPER - ONE-LINER VERSION ===
+DELAY 1000
+GUI r
+DELAY 500
+STRING powershell
+ENTER
+DELAY 1000
+STRING $u="https://raw.githubusercontent.com/LifeTimeScriptKiddie/LifeTimeScriptKiddie/main/bigbrother.png";$p="$env:TEMP\w.png";$j="$env:TEMP\w.jpg";$d="C:\Temp\0.jpg";$t="$env:APPDATA\Microsoft\Windows\Themes\TranscodedWallpaper";iwr $u -OutFile $p;Add-Type -A System.Drawing;$i=[System.Drawing.Image]::FromFile($p);$i.Save($j,[System.Drawing.Imaging.ImageFormat]::Jpeg);$i.Dispose();ni 'C:\Temp' -ItemType Directory -Force|Out-Null;copy $j $d -Force;copy $j $t -Force;$c=@"
+ENTER
+DELAY 200
+STRING using System;using System.Runtime.InteropServices;public static class W{[DllImport("user32.dll")]public static extern bool SystemParametersInfo(int a,int b,string c,int d);}
+ENTER
+DELAY 200
+STRING "@;Add-Type $c;[W]::SystemParametersInfo(20,0,$d,3);Write-Host "Done" -Fore Green
+ENTER
