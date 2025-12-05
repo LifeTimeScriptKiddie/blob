@@ -1,6 +1,12 @@
 REM === WALLPAPER CHANGER + LOCK SCREEN - RUBBER DUCKY ===
+REM Minimizes all windows, changes wallpaper (STRETCHED), locks screen
 REM Tested on Windows 11
+
+REM Minimize all windows first
+GUI d
 DELAY 1000
+
+REM Open PowerShell
 GUI r
 DELAY 500
 STRING powershell
@@ -71,6 +77,14 @@ STRING Copy-Item -Path $tmpJpg -Destination $transcoded -Force
 ENTER
 DELAY 300
 
+REM Set wallpaper style to STRETCH (2 = Stretch)
+STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -Value "2" -Force
+ENTER
+DELAY 200
+STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -Value "0" -Force
+ENTER
+DELAY 300
+
 REM Win32 API call
 STRING $code = @"
 ENTER
@@ -104,7 +118,7 @@ ENTER
 DELAY 300
 
 REM Done message
-STRING Write-Host "Wallpaper changed! Locking workstation..." -ForegroundColor Green
+STRING Write-Host "Wallpaper changed (STRETCHED)! Locking workstation..." -ForegroundColor Green
 ENTER
 DELAY 300
 
