@@ -77,11 +77,14 @@ STRING Copy-Item -Path $tmpJpg -Destination $transcoded -Force
 ENTER
 DELAY 300
 
-REM Set wallpaper style to STRETCH (2 = Stretch)
+REM Set wallpaper style to STRETCH (2 = Stretch, 0 = No Tile)
 STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -Value "2" -Force
 ENTER
 DELAY 200
-STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -Value "2" -Force
+STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -Value "0" -Force
+ENTER
+DELAY 200
+STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name Wallpaper -Value $dest -Force
 ENTER
 DELAY 300
 
