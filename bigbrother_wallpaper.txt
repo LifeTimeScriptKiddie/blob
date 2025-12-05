@@ -81,7 +81,7 @@ REM Set wallpaper style to STRETCH (2 = Stretch)
 STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -Value "2" -Force
 ENTER
 DELAY 200
-STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -Value "0" -Force
+STRING Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -Value "2" -Force
 ENTER
 DELAY 300
 
