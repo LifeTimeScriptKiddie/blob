@@ -1,15 +1,108 @@
-REM === WALLPAPER - ONE-LINER VERSION ===
+REM === WALLPAPER CHANGER - RUBBER DUCKY ===
+REM Tested on Windows 11
 DELAY 1000
 GUI r
 DELAY 500
 STRING powershell
 ENTER
 DELAY 1000
-STRING $u="https://raw.githubusercontent.com/LifeTimeScriptKiddie/LifeTimeScriptKiddie/main/bigbrother.png";$p="$env:TEMP\w.png";$j="$env:TEMP\w.jpg";$d="C:\Temp\0.jpg";$t="$env:APPDATA\Microsoft\Windows\Themes\TranscodedWallpaper";iwr $u -OutFile $p;Add-Type -A System.Drawing;$i=[System.Drawing.Image]::FromFile($p);$i.Save($j,[System.Drawing.Imaging.ImageFormat]::Jpeg);$i.Dispose();ni 'C:\Temp' -ItemType Directory -Force|Out-Null;copy $j $d -Force;copy $j $t -Force;$c=@"
+
+REM Set variables
+STRING $imgUrl = "https://raw.githubusercontent.com/LifeTimeScriptKiddie/LifeTimeScriptKiddie/main/bigbrother.png"
 ENTER
 DELAY 200
-STRING using System;using System.Runtime.InteropServices;public static class W{[DllImport("user32.dll")]public static extern bool SystemParametersInfo(int a,int b,string c,int d);}
+STRING $tmpPng = Join-Path $env:TEMP 'newwall.png'
 ENTER
 DELAY 200
-STRING "@;Add-Type $c;[W]::SystemParametersInfo(20,0,$d,3);Write-Host "Done" -Fore Green
+STRING $tmpJpg = Join-Path $env:TEMP 'newwall.jpg'
+ENTER
+DELAY 200
+STRING $dest = 'C:\Temp\0.jpg'
+ENTER
+DELAY 200
+STRING $transcoded = Join-Path $env:APPDATA 'Microsoft\Windows\Themes\TranscodedWallpaper'
+ENTER
+DELAY 200
+
+REM Download image
+STRING try {
+ENTER
+DELAY 200
+STRING Invoke-WebRequest -Uri $imgUrl -OutFile $tmpPng -UseDefaultCredentials -ErrorAction Stop
+ENTER
+DELAY 200
+STRING } catch {
+ENTER
+DELAY 200
+STRING Write-Error "Download failed: $($_.Exception.Message)"
+ENTER
+DELAY 200
+STRING break
+ENTER
+DELAY 200
+STRING }
+ENTER
+DELAY 500
+
+REM Convert to JPEG
+STRING Add-Type -AssemblyName System.Drawing
+ENTER
+DELAY 500
+STRING $img = [System.Drawing.Image]::FromFile($tmpPng)
+ENTER
+DELAY 300
+STRING $img.Save($tmpJpg, [System.Drawing.Imaging.ImageFormat]::Jpeg)
+ENTER
+DELAY 300
+STRING $img.Dispose()
+ENTER
+DELAY 300
+
+REM Create C:\Temp if needed
+STRING New-Item -Path 'C:\Temp' -ItemType Directory -Force | Out-Null
+ENTER
+DELAY 300
+
+REM Copy to destination
+STRING Copy-Item -Path $tmpJpg -Destination $dest -Force
+ENTER
+DELAY 300
+STRING Copy-Item -Path $tmpJpg -Destination $transcoded -Force
+ENTER
+DELAY 300
+
+REM Win32 API call
+STRING $code = @"
+ENTER
+DELAY 200
+STRING using System;
+ENTER
+DELAY 200
+STRING using System.Runtime.InteropServices;
+ENTER
+DELAY 200
+STRING public static class WinAPI {
+ENTER
+DELAY 200
+STRING [DllImport("user32.dll", SetLastError=true)]
+ENTER
+DELAY 200
+STRING public static extern bool SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+ENTER
+DELAY 200
+STRING }
+ENTER
+DELAY 200
+STRING "@
+ENTER
+DELAY 500
+STRING Add-Type $code
+ENTER
+DELAY 500
+STRING [void][WinAPI]::SystemParametersInfo(20, 0, $dest, 3)
+ENTER
+DELAY 300
+
+REM Done message
+STRING Write-Host "Done! Wallpaper changed." -ForegroundColor Green
 ENTER
