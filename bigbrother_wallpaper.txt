@@ -1,4 +1,4 @@
-REM === WALLPAPER CHANGER - RUBBER DUCKY ===
+REM === WALLPAPER CHANGER + LOCK SCREEN - RUBBER DUCKY ===
 REM Tested on Windows 11
 DELAY 1000
 GUI r
@@ -28,7 +28,7 @@ REM Download image
 STRING try {
 ENTER
 DELAY 200
-STRING Invoke-WebRequest -Uri $imgUrl -OutFile $tmpPng -UseDefaultCredentials -ErrorAction Stop
+STRING Invoke-WebRequest -Uri $imgUrl -OutFile $tmpPng -ErrorAction Stop
 ENTER
 DELAY 200
 STRING } catch {
@@ -104,5 +104,15 @@ ENTER
 DELAY 300
 
 REM Done message
-STRING Write-Host "Done! Wallpaper changed." -ForegroundColor Green
+STRING Write-Host "Wallpaper changed! Locking workstation..." -ForegroundColor Green
+ENTER
+DELAY 300
+
+REM Lock the workstation
+STRING rundll32.exe user32.dll,LockWorkStation
+ENTER
+DELAY 100
+
+REM Exit PowerShell
+STRING exit
 ENTER
